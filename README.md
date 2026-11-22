@@ -6,8 +6,8 @@ reusable instruction set that teaches Claude to do one job well — reviewing a
 diff, writing a PRD, polishing a repo — the same way every time.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/rohitgs28/claude-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/rohitgs28/claude-skills/actions/workflows/ci.yml)
-[![Skills](https://img.shields.io/badge/skills-10-blue.svg)](#whats-inside)
+[![CI](https://github.com/rohitgollarahalli/claude-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/rohitgollarahalli/claude-skills/actions/workflows/ci.yml)
+[![Skills](https://img.shields.io/badge/skills-13-blue.svg)](#whats-inside)
 [![Agent Skills spec](https://img.shields.io/badge/spec-agentskills.io-black.svg)](https://agentskills.io/specification)
 
 ## What's inside
@@ -32,20 +32,36 @@ diff, writing a PRD, polishing a repo — the same way every time.
 | [`user-stories`](skills/user-stories) | Break a feature/PRD into INVEST user stories with Given/When/Then acceptance criteria, and prioritize with RICE/MoSCoW. |
 | [`competitive-analysis`](skills/competitive-analysis) | Compare competitors across buyer-relevant dimensions in a matrix and draw out positioning, gaps, and recommendations. |
 
+### Workflow (opinionated)
+
+Skills that encode a specific way of working rather than a generic task. Useful as
+a template for writing your own.
+
+| Skill | What it does |
+|-------|--------------|
+| [`adversarial-pr`](skills/adversarial-pr) | Own-repo PR cycle with two adversarial reviews (diff review + context-free reviewer) before merge. |
+| [`agent-log`](skills/agent-log) | Append-only change log so a fresh agent session can resume from files alone. |
+| [`mcpx-dev`](skills/mcpx-dev) | Build, test, lint, document and release changes to [mcpx](https://github.com/rohitgollarahalli/mcpx). |
+
 ## Install
 
 ### Claude Code (as a plugin marketplace)
 
 ```
-/plugin marketplace add rohitgs28/claude-skills
+/plugin marketplace add rohitgollarahalli/claude-skills
 ```
 
 Then install a bundle:
 
 ```
-/plugin install software-engineering-skills@rohitgs28-skills
-/plugin install product-skills@rohitgs28-skills
+/plugin install software-engineering-skills@rohitgollarahalli-skills
+/plugin install product-skills@rohitgollarahalli-skills
+/plugin install workflow-skills@rohitgollarahalli-skills
 ```
+
+> **Renamed in 2.0.0:** the marketplace was called `rohitgs28-skills`. If you
+> added it under that name, run `/plugin marketplace remove rohitgs28-skills`,
+> add it again with the command above, and reinstall your bundles.
 
 Once installed, just describe your task — Claude picks the right skill. For
 example: *"review the diff on my current branch"* or *"write a PRD for CSV export."*

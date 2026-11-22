@@ -49,8 +49,8 @@ trustworthy and the skills reliably triggerable:
 1. Create `skills/<name>/SKILL.md` following the conventions above.
 2. Add supporting `references/` or `assets/` only if they earn their place.
 3. Register the skill in `.claude-plugin/marketplace.json` under the right
-   bundle (`software-engineering-skills` or `product-skills`), or add a new
-   bundle if it's a new category.
+   bundle (`software-engineering-skills`, `product-skills` or
+   `workflow-skills`), or add a new bundle if it's a new category.
 4. Add a row to the table in `README.md`.
 5. Validate before committing (see below).
 
@@ -60,6 +60,11 @@ A skill belongs here only if it is **generic and genuinely useful** — somethin
 people would reuse across many projects. A thin wrapper around a single API, or
 something a person would just do themselves in one session, doesn't meet the
 bar. Prefer a few excellent skills over many shallow ones.
+
+Exception: the `workflow-skills` bundle holds opinionated skills that encode the
+maintainer's own working rules (PR cycle, change log, project-specific dev). They
+may be specific, but must still follow every SKILL.md convention above and stay
+free of secrets and private data.
 
 ## Validation
 

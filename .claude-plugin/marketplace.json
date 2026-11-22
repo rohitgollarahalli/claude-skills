@@ -1,12 +1,12 @@
 {
-  "name": "rohitgs28-skills",
+  "name": "rohitgollarahalli-skills",
   "owner": {
     "name": "Rohit Gollarahalli",
     "email": "rohit.gs28@gmail.com"
   },
   "metadata": {
-    "description": "Generic, production-ready Agent Skills for software engineering and product work.",
-    "version": "1.0.0"
+    "description": "Generic Agent Skills for software engineering and product work, plus an opinionated workflow bundle (PR cycle, agent change log, mcpx development).",
+    "version": "2.0.0"
   },
   "plugins": [
     {
@@ -33,6 +33,17 @@
         "./skills/prd-writer",
         "./skills/user-stories",
         "./skills/competitive-analysis"
+      ]
+    },
+    {
+      "name": "workflow-skills",
+      "description": "Opinionated personal workflow skills: adversarial PR cycle, append-only agent change log, and mcpx development.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/adversarial-pr",
+        "./skills/agent-log",
+        "./skills/mcpx-dev"
       ]
     }
   ]
