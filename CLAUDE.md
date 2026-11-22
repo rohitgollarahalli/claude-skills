@@ -49,8 +49,8 @@ trustworthy and the skills reliably triggerable:
 1. Create `skills/<name>/SKILL.md` following the conventions above.
 2. Add supporting `references/` or `assets/` only if they earn their place.
 3. Register the skill in `.claude-plugin/marketplace.json` under the right
-   bundle (`software-engineering-skills`, `product-skills` or `workflow-skills`), or add a new
-   bundle if it's a new category.
+   bundle (`software-engineering-skills`, `product-skills` or
+   `workflow-skills`), or add a new bundle if it's a new category.
 4. Add a row to the table in `README.md`.
 5. Validate before committing (see below).
 

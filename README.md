@@ -59,6 +59,10 @@ Then install a bundle:
 /plugin install workflow-skills@rohitgollarahalli-skills
 ```
 
+> **Renamed in 2.0.0:** the marketplace was called `rohitgs28-skills`. If you
+> added it under that name, run `/plugin marketplace remove rohitgs28-skills`,
+> add it again with the command above, and reinstall your bundles.
+
 Once installed, just describe your task — Claude picks the right skill. For
 example: *"review the diff on my current branch"* or *"write a PRD for CSV export."*
 

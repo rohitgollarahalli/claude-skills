@@ -5,8 +5,8 @@
     "email": "rohit.gs28@gmail.com"
   },
   "metadata": {
-    "description": "Generic, production-ready Agent Skills for software engineering and product work.",
-    "version": "1.1.0"
+    "description": "Generic Agent Skills for software engineering and product work, plus an opinionated workflow bundle (PR cycle, agent change log, mcpx development).",
+    "version": "2.0.0"
   },
   "plugins": [
     {

@@ -1,6 +1,6 @@
 ---
 name: agent-log
-description: Keep a durable, append-only change log of what an agent did so any fresh session can resume from files alone. Use at session start (read the tail), and after every push, PR, merge, release, skill install, or settings change (append an entry). Also use when the user asks "what did you do", "where did we leave off", or "log this". Fires even if the user does not name the skill.
+description: Keep a durable, append-only change log of what an agent did so any fresh session can resume from files alone. Use when the user or project keeps an agent change log (e.g. `~/AGENT_LOG.md`) or asks for one — read its tail at session start and append an entry after every push, PR, merge, release, skill install or settings change. Also use for "what did you do", "where did we leave off", or "log this". Do not create a log file the user never asked for.
 ---
 
 # Agent change log
@@ -11,20 +11,26 @@ so it must be written the moment something happens, not reconstructed later.
 
 ## Location
 
-`~/AGENT_LOG.md` unless the project or user rules name another file. Newest entry
-at the bottom.
+Use the path the user's rules name. `~/AGENT_LOG.md` is the usual default. If
+no log exists and nobody asked for one, don't create it — ask once or skip.
+Newest entry at the bottom.
 
 ## At session start
 
-Read the last ~30–40 lines (`tail -40 ~/AGENT_LOG.md`) before doing anything else.
-Pick up any entry whose `Status` is not `done` or whose `Next` is not `none`.
+1. Read the tail (`tail -60 <log>`).
+2. Group entries by item (same repo and PR or branch). **Only the newest entry
+   for each item counts** — the log is append-only, so a 13:15 "waiting on CI"
+   entry is superseded by a 14:20 "merged, done" entry for the same PR.
+3. Resume items whose newest entry has a `Status` other than `done`, or a `Next`
+   other than `none`.
+4. If the tail looks mid-story (an item with no closing entry), `grep` the log
+   for that item before assuming it is still open.
 
 ## When to append
 
 After each of: push, PR opened, PR merged, release tagged, skill or plugin
 installed, settings or timer changed, something blocked. One entry per event or
-per tightly-related group (e.g. "PR opened" and "merged" can be separate entries
-an hour apart — that is the point).
+per tightly related group.
 
 ## Entry format
 
@@ -37,18 +43,22 @@ an hour apart — that is the point).
 - Next: <what to do next, or "none">
 ```
 
-Use local time from `date '+%F %H:%M'`; never guess the time.
+`Status` uses exactly one of those values, so a later reader can filter on it.
+Put anything else (e.g. "and then review") in `Next`. Take the time from
+`date '+%F %H:%M'`; never guess it.
 
 ## Rules
 
 - **Append only.** Never edit or delete an old entry. Correct a mistake with a new
   entry that says what was wrong.
-- **Facts, not intentions.** "PR #14 opened" — not "will open PR". Put plans in `Next`.
+- **Facts, not intentions.** "PR #14 opened", not "will open PR". Plans go in `Next`.
 - **Real URLs** copied from command output, never constructed by hand.
 - **Blocked means say why** and what would unblock it (e.g. "token lacks
   `workflow` scope; user runs `gh auth refresh -s workflow`").
-- Append with a heredoc (`cat >> ~/AGENT_LOG.md <<'EOF'`) so existing content is
-  never rewritten.
+- **Who does it.** If a step belongs to the human (tagging a release, approving
+  text), say so in `Next` ("user tags v0.2.0") so a later agent doesn't do it.
+- Append with a heredoc (`cat >> <log> <<'EOF'`) so existing content is never
+  rewritten.
 
 ## Example
 
@@ -57,8 +67,8 @@ Use local time from `date '+%F %H:%M'`; never guess the time.
 - Action: pushed feat/release-v0.2.0, opened PR
 - Branch / PR: feat/release-v0.2.0 / https://github.com/owner/mcpx/pull/14
 - What & why: first release (binaries, image, install.sh) so users can install without Go.
-- Status: waiting on CI + adversarial review
-- Next: fix findings, merge, tag v0.2.0
+- Status: waiting on CI
+- Next: adversarial review, fix findings, merge; then user tags v0.2.0
 ```
 
 ## Guardrails
